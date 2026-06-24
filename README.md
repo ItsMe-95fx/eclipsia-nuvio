@@ -25,6 +25,7 @@ This project is provided for educational and informational purposes only; users 
 | Eclipsia. | NoTorrent | Movies & TV Shows | English | Only English |
 | Soryn. | Netmirror | Movies & TV Shows | English, Hindi | Requires VPN to work in some regions |
 | Novus. | CineFreak | Movies & TV Shows | Bangla, English, Hindi | Less TV Shows |
+| Mavonyx. | MovieBox | Movies & TV Shows | English, Bangla, Hindi | Supports MP4, DASH |
 | Karnis. | Castle | Movies & TV Shows | English, Hindi | Some TV shows have mismatched languages |
 | Kryxalia. | AniNeko | Subbed & Dubbed Anime | English, Japanese | Only Anime |
 | Onyxia. | AniZone | Subbed & Dubbed Anime | English, Japanese | Only Anime |
