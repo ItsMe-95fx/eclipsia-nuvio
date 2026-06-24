@@ -57,7 +57,7 @@ const __async = (__this, __arguments, generator) => {
 const API_BASE = "https://api3.aoneroom.com";
 const KEY_B64_DEFAULT = "NzZpUmwwN3MweFNOOWpxbUVXQXQ3OUVCSlp1bElRSXNWNjRGWnIyTw==";
 const KEY_B64_ALT = "WHFuMm5uTzQxL0w5Mm8xaXVYaFNMSFRiWHZZNFo1Wlo2Mm04bVNMQQ==";
-const TMDB_API_KEY = "1865f43a0549ca50d341dd9ab8b29f49";
+const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const BRAND_MODELS = {
   "Samsung": ["SM-S918B", "SM-A528B", "SM-M336B"],
