@@ -375,9 +375,8 @@ function resolutionToQuality(resolution) {
 }
 
 function buildStreamName(mediaInfo, languageInfo, quality, isPreview) {
-  let name = "Karnis";
+  let name = "Karnis.";
   if (languageInfo) name += ` • ${languageInfo}`;
-  if (quality) name += ` • ${quality}`;
   if (isPreview) name += " (preview)";
   return name;
 }
