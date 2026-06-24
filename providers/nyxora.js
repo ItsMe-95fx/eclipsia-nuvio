@@ -57,7 +57,7 @@ function encryptTmdbId(tmdbId) {
 }
 
 function extractQuality(str) {
-  if (!str) return "Unknown";
+  if (!str) return null;
   let s = str.toString().toLowerCase();
   if (s.includes("2160") || s.includes("4k")) return "4K";
   if (s.includes("1440") || s.includes("2k")) return "1440p";
@@ -77,7 +77,7 @@ function extractQuality(str) {
     if (h >= 360) return "360p";
     return "240p";
   }
-  return "Unknown";
+  return null;
 }
 
 function resolveUrl(url, baseUrl) {
@@ -100,6 +100,7 @@ function createStreamTitle(title, year, mediaType, season, episode) {
 function buildStream(url, qualityKey, streamTitle) {
   if (!url) return null;
   const quality = extractQuality(qualityKey);
+  if (quality === null) return null;
   return {
     name: "Nyxora.",
     title: quality,
@@ -138,18 +139,18 @@ function fetchM3U8Streams(playlistUrl, streamTitle) {
       return r.text();
     })
     .then(function(content) {
-      if (!content) return [buildStream(playlistUrl, "Auto", streamTitle)];
+      if (!content) return [];
       const parsed = parseM3U8(content, playlistUrl);
-      if (parsed.length === 0) return [buildStream(playlistUrl, "Auto", streamTitle)];
+      if (parsed.length === 0) return [];
       return parsed.map(function(s) {
         const qualityKey = s.resolution
           ? s.resolution.split("x").pop() + "p"
-          : "Auto";
+          : null;
         return buildStream(s.url, qualityKey, streamTitle);
       }).filter(Boolean);
     })
     .catch(function() {
-      return [buildStream(playlistUrl, "Auto", streamTitle)];
+      return [];
     });
 }
 
@@ -179,7 +180,7 @@ function extractStreamsFromData(data, streamTitle) {
   }
 
   if (data.url) {
-    const s = buildStream(data.url, data.quality || "Unknown", streamTitle);
+    const s = buildStream(data.url, data.quality || null, streamTitle);
     if (s) results.push(s);
     return results;
   }
@@ -187,7 +188,7 @@ function extractStreamsFromData(data, streamTitle) {
   if (Array.isArray(data.streams)) {
     data.streams.forEach(function(item) {
       if (item && item.url) {
-        const s = buildStream(item.url, item.quality || item.resolution || "Unknown", streamTitle);
+        const s = buildStream(item.url, item.quality || item.resolution || null, streamTitle);
         if (s) results.push(s);
       }
     });
@@ -197,7 +198,7 @@ function extractStreamsFromData(data, streamTitle) {
   if (Array.isArray(data.links)) {
     data.links.forEach(function(item) {
       if (item && item.url) {
-        const s = buildStream(item.url, item.quality || "Unknown", streamTitle);
+        const s = buildStream(item.url, item.quality || null, streamTitle);
         if (s) results.push(s);
       }
     });
