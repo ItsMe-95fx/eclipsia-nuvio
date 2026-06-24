@@ -68,6 +68,19 @@
       "contentLanguage": ["en", "hi"]
     },
     {
+      "id": "mavonyx",
+      "name": "Mavonyx.",
+      "description": "Provider: MovieBox | English, Bangla, Hindi",
+      "version": "1.7.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/mavonyx.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8", "mpd"],
+      "logo": "",
+      "contentLanguage": ["en", "hi", "bn"]
+    },
+    {
       "id": "vornix",
       "name": "Vornix.",
       "description": "Provider: VegaMovies | English, Hindi",
