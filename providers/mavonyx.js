@@ -390,7 +390,7 @@ function getStreamLinks(subjectId, season = 0, episode = 0, mediaTitle = "", med
               const qualLabel = stream.resolutions || stream.quality || "Auto";
               const qualNum = parseQualityNumber(qualLabel);
 
-              if (qualNum < 720)
+              if (qualNum < 1080)
                 continue;
 
               const quality = qualNum ? `${qualNum}p` : "Auto";
@@ -425,7 +425,7 @@ function getStreamLinks(subjectId, season = 0, episode = 0, mediaTitle = "", med
 
                   const qualNum = parseQualityNumber(video.resolution);
 
-                  if (qualNum < 720)
+                  if (qualNum < 1080)
                     continue;
 
                   const quality = qualNum ? `${qualNum}p` : "Auto";
