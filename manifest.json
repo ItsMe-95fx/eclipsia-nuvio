@@ -81,6 +81,19 @@
       "contentLanguage": ["en", "hi"]
     },
     {
+      "id": "kryxalia",
+      "name": "Kryxalia.",
+      "description": "Provider: AniNeko | Sub & Dubbed Anime",
+      "version": "1.2.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/kryxalia.js",
+      "enabled": true,
+      "formats": ["m3u8"],
+      "logo": "",
+      "contentLanguage": ["en", "ja"]
+    },
+    {
       "id": "onyxia",
       "name": "Onyxia.",
       "description": "Provider: AniZone | Sub & Dubbed Anime",
