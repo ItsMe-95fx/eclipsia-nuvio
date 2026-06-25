@@ -94,14 +94,27 @@
       "contentLanguage": ["en"]
     },
     {
+      "id": "pynvix",
+      "name": "Pynvix.",
+      "description": "Provider: FMFTP | English, Bangla, Hindi",
+      "version": "1.2.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/pynvix.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8", "mkv"],
+      "logo": "",
+      "contentLanguage": ["en", "bn", "hi"]
+    },
+    {
       "id": "vornix",
-      "name": "Vornix.",
+      "name": "Vornix. | Not Working",
       "description": "Provider: VegaMovies | English, Hindi",
       "version": "3.9.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/vornix.js",
-      "enabled": true,
+      "enabled": false,
       "formats": ["mp4", "mkv"],
       "logo": "",
       "contentLanguage": ["en", "hi"]
@@ -121,13 +134,13 @@
     },
     {
       "id": "onyxia",
-      "name": "Onyxia.",
+      "name": "Onyxia. | Not Working",
       "description": "Provider: AniZone | Sub & Dubbed Anime",
       "version": "2.4.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/onyxia.js",
-      "enabled": true,
+      "enabled": false,
       "formats": ["m3u8"],
       "logo": "",
       "contentLanguage": ["en", "ja"]
