@@ -14,7 +14,7 @@ const __async = (__this, __arguments, generator) => {
 };
 
 const SOLUNIX_API = "https://stravo-clfk.onrender.com";
-const TMDB_API_KEY = "e5352370662b71bd3695c86ac7b38d66";
+const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 
 const HEADERS = {
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
