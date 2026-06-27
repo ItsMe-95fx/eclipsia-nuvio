@@ -5,11 +5,14 @@ A Curated Collection of Providers for **[Nuvio](https://github.com/NuvioMedia)**
 # **Installation**
 
 1. Open **[Nuvio](https://github.com/NuvioMedia)** app
-2. Go to **Settings → Content & Discovery → Plugins**
+2. Go to **Settings → Content & Discovery → Plugins** <br>
 3. Add this repository URL:
    ```
    https://raw.githubusercontent.com/Eclipsia-Vault/eclipsia-nuvio/refs/heads/main/manifest.json
    ```
+> [!IMPORTANT]
+> You MUST set TMDB API Key in **Settings → Integrations → TMDB Enrichment**\
+> Otherwise plugins will not work reliably.
 
 # **DMCA Notice**
 <p align="justify">We issue this notice to clarify that these plugins operate like standard web browsers by retrieving video files from the Internet and do not, by themselves, contravene the Digital Millennium Copyright Act (17 U.S.C. § 1201 et seq.). The content accessible through these plugins is hosted by third-party websites during autonomous browsing and is not hosted or distributed by this repository or the Nuvio application. Users are solely responsible for their use of the plugins and must ensure compliance with applicable national, state, and local laws. Pursuant to the DMCA, copyright owners seeking removal of infringing material should follow the notice-and-takedown procedures set forth in 17 U.S.C. § 512. If you believe any content accessed via the plugins infringes intellectual property rights, please direct your complaints to the hosting websites or file hosts rather than to the repository maintainers or the Nuvio application developers.</p>
