@@ -1,3 +1,5 @@
+"use strict";
+
 const PROVIDER_NAME   = 'Novus.';
 const BASE_URL        = 'https://cinefreak.nl';
 const ECLIPSIA_BASE   = 'https://new5.cinecloud.site';
