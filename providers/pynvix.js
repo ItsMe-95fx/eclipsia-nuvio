@@ -24,29 +24,45 @@ const pad2 = (n) => String(Number.parseInt(n ?? 0, 10) || 0).padStart(2, "0");
 
 const cleanText = (str) =>
   String(str ?? "")
-    .replace(/[\u{1F300}-\u{1F9FF}][\u{2600}-\u{26FF}]/gu, "")
+    .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, "")
     .trim();
 
-const ALLOWED_LANGS = ["original", "bangla", "english", "bengali", "hindi"];
+const ALLOWED_LANGS = ["hindi", "original", "angla", "anglais", "english", "bengali", "bangla"];
 
 const isValidLanguage = (lang) => {
   if (lang === "Default") return true;
   return ALLOWED_LANGS.includes(lang.toLowerCase());
 };
 
-const extractQuality = (text) => {
-  const match = String(text ?? "").match(/(\d{3,4}p|2160p)/i);
-  return match?.[0]?.toLowerCase() ?? null;
+const isBengali = (lang) => {
+  const l = lang.toLowerCase();
+  return l === "bengali" || l === "bangla";
 };
 
-const isValidQuality = (quality) => {
-  return quality && ["1080p", "4k", "2160p"].includes(quality.toLowerCase());
+const normalizeQuality = (raw) => {
+  const q = raw?.toLowerCase();
+  if (!q) return null;
+  if (q === "2160p") return "4K";
+  return q;
+};
+
+const isValidQuality = (quality, language) => {
+  const q = quality?.toLowerCase();
+  if (!q) return false;
+  if (q === "1080p" || q === "4k" || q === "2160p") return true;
+  if (q === "720p") return isBengali(language);
+  return false;
+};
+
+const extractQuality = (text) => {
+  const match = String(text ?? "").match(/(\d{3,4}p|4k|2160p)/i);
+  return match?.[0] ?? null;
 };
 
 const extractLanguage = (cleanedTitle) => {
   const t = String(cleanedTitle ?? "");
-  const m = t.match(/Audio:\s*([^\n\u2E31|\ufb01]+)|/i);
-  if (m) {
+  const m = t.match(/Audio:\s*([^⸱|\u2E31·\n]+)/i);
+  if (m && m[1]) {
     const lang = m[1].trim();
     return lang === "" ? "Default" : lang.charAt(0).toUpperCase() + lang.slice(1).toLowerCase();
   }
@@ -109,18 +125,16 @@ function buildStream(item) {
     if (!item?.url || item.externalUrl) return null;
     if (String(item.url).includes("github.com")) return null;
 
-    const combinedText = `${item.name ?? ""} ${item.title ?? ""}`;
-    const cleanedCombined = cleanText(combinedText);
-    
-    const rawQuality = extractQuality(cleanedCombined);
-    const quality = rawQuality ? rawQuality.replace("2160p", "4K") : null;
-    
-    if (!isValidQuality(rawQuality)) return null;
+    const combinedText = cleanText(`${item.name ?? ""} ${item.title ?? ""}`);
+    const rawQuality = extractQuality(combinedText);
 
     const cleanedTitle = cleanText(item.title ?? "");
     const language = extractLanguage(cleanedTitle);
 
     if (!isValidLanguage(language)) return null;
+    if (!isValidQuality(rawQuality, language)) return null;
+
+    const quality = normalizeQuality(rawQuality);
 
     const headers = {
       ...(item.behaviorHints?.proxyHeaders?.request ?? {}),
