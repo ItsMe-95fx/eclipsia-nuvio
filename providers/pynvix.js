@@ -13,7 +13,7 @@ const __async = (__this, __arguments, generator) => {
   });
 };
 
-const PYNVIX_API = "https://moviebox-cfa7.onrender.com";
+const PYNVIX_API = "https://moviebox-cfa7.onrender.com/source=v2%7Clang=all%7Cres=1080p%7Clayout=cinematic";
 const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 
 const HEADERS = {
