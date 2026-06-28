@@ -2,8 +2,8 @@
 
 const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 const ENC_DEC_API = "https://enc-dec.app/api";
-const VIDLINK_API = "https://vidlink.pro/api/b";
-const VIDLINK_HEADERS = {
+const NYXORA_API = "https://vidlink.pro/api/b";
+const NYXORA_HEADERS = {
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
   "Connection": "keep-alive",
   "Referer": "https://vidlink.pro/",
@@ -26,8 +26,12 @@ function pad2(n) {
 
 function getTmdbInfo(tmdbId, mediaType) {
   const type = mediaType === "tv" ? "tv" : "movie";
-  const url = "https://api.themoviedb.org/3/" + type + "/" + tmdbId + "?api_key=" + TMDB_API_KEY;
-  return fetch(url)
+  const url = "https://api.themoviedb.org/3/" + type + "/" + tmdbId;
+  const tmdbHeaders = {
+    "Authorization": "Bearer " + TMDB_API_KEY,
+    "Accept": "application/json"
+  };
+  return fetch(url, { headers: tmdbHeaders })
     .then(function(response) {
       if (!response.ok) return null;
       return response.json();
@@ -107,11 +111,10 @@ function buildStream(url, qualityKey, streamTitle) {
     url: url,
     quality: quality,
     type: url.toLowerCase().includes(".m3u8") ? "m3u8" : "video",
-    headers: VIDLINK_HEADERS,
-    provider: "Vidlink"
+    headers: NYXORA_HEADERS,
+    provider: "Nyxora"
   };
 }
-
 
 function parseM3U8(content, baseUrl) {
   const lines = content.split("\n").map(function(l) { return l.trim(); }).filter(Boolean);
@@ -133,7 +136,7 @@ function parseM3U8(content, baseUrl) {
 }
 
 function fetchM3U8Streams(playlistUrl, streamTitle) {
-  return fetch(playlistUrl, { headers: VIDLINK_HEADERS })
+  return fetch(playlistUrl, { headers: NYXORA_HEADERS })
     .then(function(r) {
       if (!r.ok) return null;
       return r.text();
@@ -153,7 +156,6 @@ function fetchM3U8Streams(playlistUrl, streamTitle) {
       return [];
     });
 }
-
 
 function extractStreamsFromData(data, streamTitle) {
   const results = [];
@@ -234,7 +236,6 @@ function sortStreams(streams) {
     });
 }
 
-
 function getStreams(tmdbId, mediaType, season, episode) {
   mediaType = mediaType || "movie";
   const isTv = mediaType === "tv" || mediaType === "series" ||
@@ -251,12 +252,12 @@ function getStreams(tmdbId, mediaType, season, episode) {
         if (!encryptedId) return [];
 
         const vidlinkUrl = isTv && s && e
-          ? VIDLINK_API + "/tv/" + encryptedId + "/" + s + "/" + e
-          : VIDLINK_API + "/movie/" + encryptedId;
+          ? NYXORA_API + "/tv/" + encryptedId + "/" + s + "/" + e
+          : NYXORA_API + "/movie/" + encryptedId;
 
         const streamTitle = createStreamTitle(info.title, info.year, finalType, s, e);
 
-        return fetch(vidlinkUrl, { headers: VIDLINK_HEADERS })
+        return fetch(vidlinkUrl, { headers: NYXORA_HEADERS })
           .then(function(r) {
             if (!r.ok) return null;
             return r.json();
