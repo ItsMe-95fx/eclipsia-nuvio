@@ -30,10 +30,10 @@ This project is provided for educational and informational purposes only; users 
 | Novus. | CineFreak | Movies & TV Shows | Bangla, English, Hindi | Enabled | Less TV Shows |
 | Karnis. | Castle | Movies & TV Shows | English, Hindi | Enabled | Some TV shows have mismatched languages |
 | Solunix. | Stravo | Movies & TV Shows | English | Enabled | Only English, Download Friendly |
-| Pynvix. | MovieBox (Proxy) | Movies & TV Shows | Bangla, English, Hindi | Enabled | Uses Proxy |
+| Pynvix. | MovieBox (Proxy) | Movies & TV Shows | Bangla, English, Hindi | Enabled | Uses Proxy, Scrapes from Website (More content compared to app) |
 | Kryxalia. | AniNeko | Subbed & Dubbed Anime | English, Japanese | Enabled | Only Anime |
 | Nyxora. | Vidlink | Movies, TV Shows & Anime | English, Bangla, Hindi | Enabled | Requires VPN to work in some regions |
-| Mavonyx. | MovieBox | Movies & TV Shows | English, Bangla, Hindi | Disabled | Currently Not Working |
+| Mavonyx. | MovieBox | Movies & TV Shows | English, Bangla, Hindi | Enabled | Scrapes from App |
 | Onyxia. | AniZone | Subbed & Dubbed Anime | English, Japanese | Disabled | Currently Not Working |
 | Vornix. | VegaMovies | Movies & TV Shows | English, Hindi | Disabled | Currently Not Working |
 
