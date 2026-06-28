@@ -1,3 +1,5 @@
+"use strict";
+
 const __create = Object.create;
 const __defProp = Object.defineProperty;
 const __defProps = Object.defineProperties;
