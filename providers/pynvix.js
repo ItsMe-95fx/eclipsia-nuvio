@@ -24,10 +24,10 @@ const pad2 = (n) => String(Number.parseInt(n ?? 0, 10) || 0).padStart(2, "0");
 
 const cleanText = (str) =>
   String(str ?? "")
-    .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, "")
+    .replace(/[\u{1F300}-\u{1F9FF}][\u{2600}-\u{26FF}]/gu, "")
     .trim();
 
-const ALLOWED_LANGS = ["hindi", "original", "english", "bangla", "english", "bengali"];
+const ALLOWED_LANGS = ["original", "bangla", "english", "bengali", "hindi"];
 
 const isValidLanguage = (lang) => {
   if (lang === "Default") return true;
@@ -35,13 +35,17 @@ const isValidLanguage = (lang) => {
 };
 
 const extractQuality = (text) => {
-  const match = String(text ?? "").match(/(\d{3,4}p)/i);
-  return match?.[0] ?? "Unknown";
+  const match = String(text ?? "").match(/(\d{3,4}p|2160p)/i);
+  return match?.[0]?.toLowerCase() ?? null;
+};
+
+const isValidQuality = (quality) => {
+  return quality && ["1080p", "4k", "2160p"].includes(quality.toLowerCase());
 };
 
 const extractLanguage = (cleanedTitle) => {
   const t = String(cleanedTitle ?? "");
-  const m = t.match(/Audio:\s*([^\n\u2E31|·]+)/i);
+  const m = t.match(/Audio:\s*([^\n\u2E31|\ufb01]+)|/i);
   if (m) {
     const lang = m[1].trim();
     return lang === "" ? "Default" : lang.charAt(0).toUpperCase() + lang.slice(1).toLowerCase();
@@ -105,8 +109,15 @@ function buildStream(item) {
     if (!item?.url || item.externalUrl) return null;
     if (String(item.url).includes("github.com")) return null;
 
-    const cleanedTitle = cleanText(item.title);
-    const quality = extractQuality(cleanText(item.name) + " " + cleanedTitle);
+    const combinedText = `${item.name ?? ""} ${item.title ?? ""}`;
+    const cleanedCombined = cleanText(combinedText);
+    
+    const rawQuality = extractQuality(cleanedCombined);
+    const quality = rawQuality ? rawQuality.replace("2160p", "4K") : null;
+    
+    if (!isValidQuality(rawQuality)) return null;
+
+    const cleanedTitle = cleanText(item.title ?? "");
     const language = extractLanguage(cleanedTitle);
 
     if (!isValidLanguage(language)) return null;
