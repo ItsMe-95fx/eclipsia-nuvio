@@ -1,6 +1,6 @@
 {
   "name": "Eclipsia",
-  "version": "5.7.0",
+  "version": "5.9.0",
   "scrapers": [
     {
       "id": "eclipsia",
@@ -55,56 +55,17 @@
       "contentLanguage": ["en", "ja"]
     },
     {
-      "id": "pynvix",
-      "name": "Pynvix.",
-      "description": "Provider: MovieBox (Proxy) | English, Bangla, Hindi",
-      "version": "2.2.0",
+      "id": "vornix",
+      "name": "Vornix.",
+      "description": "Provider: PenguPlay | English (Only 4K)",
+      "version": "1.1.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
-      "filename": "providers/pynvix.js",
-      "enabled": false,
-      "formats": ["mp4", "m3u8", "mkv"],
-      "logo": "",
-      "contentLanguage": ["en", "bn", "hi"]
-    },
-    {
-      "id": "solunix",
-      "name": "Solunix.",
-      "description": "Provider: Stravo | English",
-      "version": "1.2.0",
-      "author": "Eclipsia",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/solunix.js",
+      "filename": "providers/vornix.js",
       "enabled": true,
-      "formats": ["mp4", "m3u8", "mkv"],
-      "logo": "",
-      "contentLanguage": ["en"]
-    },
-    {
-      "id": "karnis",
-      "name": "Karnis.",
-      "description": "Provider: Castle | English, Hindi",
-      "version": "1.6.0",
-      "author": "Eclipsia",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/karnis.js",
-      "enabled": true,
-      "formats": ["mp4", "m3u8"],
+      "formats": ["m3u8", "mp4", "mkv"],
       "logo": "",
       "contentLanguage": ["en", "hi"]
-    },
-    {
-      "id": "nyxora",
-      "name": "Nyxora.",
-      "description": "Provider: Vidlink | English, Bangla, Hindi",
-      "version": "2.2.0",
-      "author": "Eclipsia",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/nyxora.js",
-      "enabled": true,
-      "formats": ["mp4", "m3u8"],
-      "logo": "",
-      "contentLanguage": ["en", "hi", "bn"]
     },
     {
       "id": "mavonyx",
@@ -120,6 +81,58 @@
       "contentLanguage": ["en", "hi", "bn"]
     },
     {
+      "id": "solunix",
+      "name": "Solunix.",
+      "description": "Provider: Stravo | English",
+      "version": "1.2.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/solunix.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8", "mkv"],
+      "logo": "",
+      "contentLanguage": ["en"]
+    },
+    {
+      "id": "nyxora",
+      "name": "Nyxora.",
+      "description": "Provider: Vidlink | English, Bangla, Hindi",
+      "version": "2.2.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/nyxora.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8"],
+      "logo": "",
+      "contentLanguage": ["en", "hi", "bn"]
+    },
+    {
+      "id": "karnis",
+      "name": "Karnis.",
+      "description": "Provider: Castle | English, Hindi",
+      "version": "1.6.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/karnis.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8"],
+      "logo": "",
+      "contentLanguage": ["en", "hi"]
+    },
+    {
+      "id": "pynvix",
+      "name": "Pynvix.",
+      "description": "Provider: MovieBox (Proxy) | English, Bangla, Hindi",
+      "version": "2.2.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/pynvix.js",
+      "enabled": false,
+      "formats": ["mp4", "m3u8", "mkv"],
+      "logo": "",
+      "contentLanguage": ["en", "bn", "hi"]
+    },
+    {
       "id": "kryxalia",
       "name": "Kryxalia.",
       "description": "Provider: AniNeko | Sub & Dubbed Anime",
@@ -131,19 +144,6 @@
       "formats": ["m3u8"],
       "logo": "",
       "contentLanguage": ["en", "ja"]
-    },
-    {
-      "id": "vornix",
-      "name": "Vornix.",
-      "description": "Provider: VegaMovies | English, Hindi",
-      "version": "3.9.0",
-      "author": "Eclipsia",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/vornix.js",
-      "enabled": false,
-      "formats": ["mp4", "mkv"],
-      "logo": "",
-      "contentLanguage": ["en", "hi"]
     }
   ]
 }
