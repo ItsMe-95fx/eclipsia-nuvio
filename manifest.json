@@ -31,7 +31,7 @@
     {
       "id": "vornix",
       "name": "Vornix.",
-      "description": "Provider: PenguPlay | English (4K Only)",
+      "description": "Provider: PenguPlay (Beta) | English (4K Only)",
       "version": "1.1.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
@@ -81,6 +81,19 @@
       "contentLanguage": ["en", "hi", "bn"]
     },
     {
+      "id": "pynvix",
+      "name": "Pynvix.",
+      "description": "Provider: PenguPlay | English (1080p Only)",
+      "version": "1.4.0",
+      "author": "Eclipsia",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/pynvix.js",
+      "enabled": true,
+      "formats": ["m3u8", "mp4", "mkv"],
+      "logo": "",
+      "contentLanguage": ["en"]
+    },
+    {
       "id": "solunix",
       "name": "Solunix.",
       "description": "Provider: Stravo | English",
@@ -118,19 +131,6 @@
       "formats": ["mp4", "m3u8"],
       "logo": "",
       "contentLanguage": ["en", "hi"]
-    },
-    {
-      "id": "pynvix",
-      "name": "Pynvix.",
-      "description": "Provider: MovieBox (Proxy) | English, Bangla, Hindi",
-      "version": "2.2.0",
-      "author": "Eclipsia",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/pynvix.js",
-      "enabled": false,
-      "formats": ["mp4", "m3u8", "mkv"],
-      "logo": "",
-      "contentLanguage": ["en", "bn", "hi"]
     },
     {
       "id": "kryxalia",
