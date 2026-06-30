@@ -524,7 +524,7 @@ function getStreamLinks(subjectId, season = 0, episode = 0, mediaTitle = "", med
                     name: fallbackTitle,
                     title: fallbackTitle,
                     url: secureUrl,
-                    quality,
+                    quality `• ${formatType}`,
                     qualityNum: qualNumVideo,
                     headers: {
                       "Referer": API_BASE,
