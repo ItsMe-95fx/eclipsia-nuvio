@@ -490,7 +490,7 @@ function getStreamLinks(subjectId, season = 0, episode = 0, mediaTitle = "", med
                 name: streamTitle,
                 title: streamTitle,
                 url: secureUrl,
-                quality `• ${formatType}`,
+                quality: `quality • ${formatType}`,
                 qualityNum: qualNumMain,
                 headers: __spreadValues({
                   "Referer": API_BASE,
