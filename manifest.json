@@ -31,7 +31,7 @@
     {
       "id": "vornix",
       "name": "Vornix.",
-      "description": "Provider: PenguPlay (Beta) | English (4K Only)",
+      "description": "Provider: PenguPlay (4k) | English (4K Only)",
       "version": "1.4.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
@@ -83,7 +83,7 @@
     {
       "id": "pynvix",
       "name": "Pynvix.",
-      "description": "Provider: PenguPlay | English (1080p Only)",
+      "description": "Provider: PenguPlay (1080p) | English (1080p Only)",
       "version": "1.6.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
