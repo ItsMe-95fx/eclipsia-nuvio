@@ -27,11 +27,11 @@ This project is provided for educational and informational purposes only; users 
 |---|---|---|---|---|---|
 | Eclipsia. | NoTorrent | Movies & TV Shows | English | Enabled | Only English |
 | Soryn. | Netmirror | Movies & TV Shows | English, Hindi | Enabled | Requires VPN to work in some regions |
-| Vornix. | PenguPlay (Beta) | Movies & TV Shows | English | Enabled | 4K Content Only |
+| Vornix. | VidKing | Movies & TV Shows | English | Enabled | 4K Content Only |
 | Onyxia. | AniZone | Subbed & Dubbed Anime | English, Japanese | Enabled | Only Anime |
 | Novus. | CineFreak | Movies & TV Shows | Bangla, English, Hindi | Enabled | Less TV Shows |
 | Mavonyx. | MovieBox | Movies, TV Shows & Anime | English, Bangla, Hindi | Enabled | Supports MP4, DASH |
-| Pynvix. | PenguPlay (Stable) | Movies & TV Shows | Bangla, English, Hindi | Enabled | 1080p Content Only |
+| Pynvix. | VidKing | Movies & TV Shows | Bangla, English, Hindi | Enabled | 1080p Content Only |
 | Solunix. | Stravo | Movies & TV Shows | English | Enabled | Only English, Download Friendly |
 | Nyxora. | Vidlink | Movies, TV Shows & Anime | English, Bangla, Hindi | Enabled | Requires VPN to work in some regions |
 | Karnis. | Castle | Movies & TV Shows | English, Hindi | Enabled | Some TV shows have mismatched languages |
