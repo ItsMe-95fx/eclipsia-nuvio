@@ -13,7 +13,7 @@ const __async = (__this, __arguments, generator) => {
   });
 };
 
-const VORNIX_API = "https://pengu.uk/%7B%22source_multiembed%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_vidking%22%3A%22on%22%2C%22quality_floor%22%3A%224K%20only%22%7D/manifest.json";
+const VORNIX_API = "https://pengu.uk/%7B%22source_moviebox%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_vidking%22%3A%22on%22%2C%22quality_floor%22%3A%224K%20only%22%7D";
 const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 
 const HEADERS = {
