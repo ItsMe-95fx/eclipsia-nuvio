@@ -127,7 +127,7 @@
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/karnis.js",
-      "enabled": false,
+      "enabled": true,
       "formats": ["mp4", "m3u8"],
       "logo": "",
       "contentLanguage": ["en", "hi"]
