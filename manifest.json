@@ -18,7 +18,7 @@
     {
       "id": "vornix",
       "name": "Vornix.",
-      "description": "Provider: Multi Providers (4k) | English (4K Only)",
+      "description": "Provider: Multi Providers (4k) | English",
       "version": "1.4.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
@@ -44,7 +44,7 @@
     {
       "id": "pynvix",
       "name": "Pynvix.",
-      "description": "Provider: Multi Providers (1080p) | English (1080p Only)",
+      "description": "Provider: Multi Providers (1080p) | English",
       "version": "1.6.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
