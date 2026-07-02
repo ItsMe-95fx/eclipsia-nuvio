@@ -113,7 +113,7 @@ function buildStream(item) {
 
     if (!streamUrl) return null;
 
-    const nameParts = ["FASTRION."];
+    const nameParts = ["Fastrion."];
     if (language !== "Default") nameParts.push(language);
 
     return {
