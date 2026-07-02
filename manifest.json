@@ -1,6 +1,6 @@
 {
   "name": "Eclipsia",
-  "version": "5.9.0",
+  "version": "6.0.0",
   "scrapers": [
     {
       "id": "soryn",
@@ -97,7 +97,7 @@
       "id": "fastrion",
       "name": "Fastrion.",
       "description": "Provider: NoTorrent | English",
-      "version": "3.8.0",
+      "version": "3.9.0",
       "author": "Eclipsia",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/fastrion.js",
