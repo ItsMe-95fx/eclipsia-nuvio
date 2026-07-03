@@ -13,7 +13,60 @@ const __async = (__this, __arguments, generator) => {
   });
 };
 
-const VORNIX_API = "https://53011be86895-penguplay.baby-beamup.club/%7B%22source_acermovies%22%3A%22on%22%2C%22source_allmovieland%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_vidking%22%3A%22on%22%2C%22res_2160%22%3A%22on%22%7D";
+function buildConfig(token) {
+  return {
+    source_vidking: 'on',
+    res_2160: 'on',
+    auth_token: token
+  };
+}
+
+function buildVornixApi(token) {
+  const config = buildConfig(token);
+  const encoded = encodeURIComponent(JSON.stringify(config));
+  const manifestUrl = `https://pengu.uk/${encoded}/manifest.json`;
+  return manifestUrl.replace(/\/manifest\.json$/, '');
+}
+
+function fetchAuthToken() {
+  return __async(this, null, function* () {
+    try {
+      const response = yield fetch('https://pengu.uk/auth/token', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Token request failed with status ${response.status}`);
+      }
+      
+      const payload = yield response.json();
+      
+      if (!payload.token) {
+        throw new Error(payload.error || 'No token returned from server');
+      }
+      
+      return payload.token;
+    } catch (error) {
+      throw error;
+    }
+  });
+}
+
+let VORNIX_API = '';
+
+function initVornixApi() {
+  return __async(this, null, function* () {
+    const token = yield fetchAuthToken();
+    VORNIX_API = buildVornixApi(token);
+  });
+}
+
+initVornixApi().catch(console.error);
+
 const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 
 const HEADERS = {
@@ -43,6 +96,20 @@ const extractLanguage = (cleanedTitle) => {
 
 const isProxyUrl = (url) =>
   String(url ?? "").includes("workers.dev") || /[?&]url=/.test(String(url ?? ""));
+
+function hasPlayerHeader(item) {
+  const referer = item?.behaviorHints?.proxyHeaders?.request?.Referer ||
+                  item?.behaviorHints?.proxyHeaders?.request?.referer ||
+                  '';
+  const origin = item?.behaviorHints?.proxyHeaders?.request?.Origin ||
+                 item?.behaviorHints?.proxyHeaders?.request?.origin ||
+                 '';
+  
+  const lowerRef = referer.toLowerCase();
+  const lowerOrig = origin.toLowerCase();
+  
+  return lowerRef.includes('player') || lowerOrig.includes('player');
+}
 
 function getImdbId(tmdbId, mediaType) {
   return __async(this, null, function* () {
@@ -132,6 +199,8 @@ function parseStreams(data) {
     if (!Array.isArray(data?.streams) || data.streams.length === 0) return [];
 
     const validItems = data.streams.filter((item) => {
+      if (!hasPlayerHeader(item)) return false;
+      
       const cleanedTitle = cleanText(item?.title);
       if (!cleanedTitle.toLowerCase().includes("")) return false;
       if (typeof item?.url !== "string" || !item.url.startsWith("https")) return false;
