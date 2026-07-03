@@ -13,7 +13,7 @@ const __async = (__this, __arguments, generator) => {
   });
 };
 
-const PYNVIX_API = "https://53011be86895-penguplay.baby-beamup.club/%7B%22source_acermovies%22%3A%22on%22%2C%22source_aniwaves%22%3A%22on%22%2C%22source_allmovieland%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_vidking%22%3A%22on%22%2C%22source_animesuge%22%3A%22on%22%2C%22source_aether%22%3A%22on%22%2C%22res_1080%22%3A%22on%22%2C%22audio_english%22%3A%22on%22%2C%22audio_spanish%22%3A%22on%22%2C%22audio_hindi%22%3A%22on%22%2C%22audio_tamil%22%3A%22off%22%2C%22audio_telugu%22%3A%22off%22%2C%22audio_french%22%3A%22off%22%2C%22audio_german%22%3A%22off%22%2C%22audio_italian%22%3A%22off%22%2C%22audio_portuguese%22%3A%22on%22%2C%22audio_japanese%22%3A%22on%22%2C%22audio_korean%22%3A%22off%22%2C%22audio_russian%22%3A%22on%22%2C%22audio_chinese%22%3A%22on%22%2C%22audio_arabic%22%3A%22on%22%2C%22audio_turkish%22%3A%22on%22%2C%22audio_polish%22%3A%22off%22%2C%22audio_dutch%22%3A%22off%22%2C%22audio_greek%22%3A%22off%22%2C%22audio_hebrew%22%3A%22off%22%2C%22audio_thai%22%3A%22off%22%2C%22audio_vietnamese%22%3A%22off%22%2C%22audio_malayalam%22%3A%22off%22%2C%22audio_bengali%22%3A%22on%22%2C%22audio_urdu%22%3A%22off%22%2C%22audio_swedish%22%3A%22off%22%2C%22audio_finnish%22%3A%22off%22%2C%22audio_danish%22%3A%22off%22%2C%22audio_norwegian%22%3A%22off%22%7D";
+const PYNVIX_API = "https://53011be86895-penguplay.baby-beamup.club/%7B%22source_acermovies%22%3A%22on%22%2C%22source_aniwaves%22%3A%22on%22%2C%22source_allmovieland%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_vidking%22%3A%22on%22%2C%22source_animesuge%22%3A%22on%22%2C%22res_1080%22%3A%22on%22%7D";
 const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 
 const HEADERS = {
