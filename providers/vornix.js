@@ -173,7 +173,14 @@ function getSourceName(item) {
   return null;
 }
 
-function hasPlayerHeader(item) {
+function isValidVidkingStream(item) {
+  const filename = item?.behaviorHints?.filename || '';
+  const isFromVidking = filename.toLowerCase().includes('vidking');
+  
+  if (!isFromVidking) {
+    return true;
+  }
+  
   const referer = item?.behaviorHints?.proxyHeaders?.request?.Referer ||
                   item?.behaviorHints?.proxyHeaders?.request?.referer ||
                   '';
@@ -315,7 +322,7 @@ function parseStreams(data) {
     if (!Array.isArray(data?.streams) || data.streams.length === 0) return [];
 
     const validItems = data.streams.filter((item) => {
-      if (!hasPlayerHeader(item)) return false;
+      if (!isValidVidkingStream(item)) return false;
       
       const cleanedTitle = cleanText(item?.title || item?.name || '');
       if (!cleanedTitle.toLowerCase().includes("")) return false;
