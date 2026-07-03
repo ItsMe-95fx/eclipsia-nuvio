@@ -106,7 +106,6 @@ function extractQuality(item) {
   
   const parts = [];
   
-  // Check for "4K" first, then numeric resolutions
   let resolutionFound = false;
   if (/4k\b/.test(combinedText)) {
     parts.push('2160p');
@@ -338,8 +337,6 @@ function parseStreams(data) {
     const validItems = data.streams.filter((item) => {
       if (!isValidVidkingStream(item)) return false;
       
-      const cleanedTitle = cleanText(item?.title || item?.name || '');
-      if (!cleanedTitle.toLowerCase().includes("")) return false;
       if (typeof item?.url !== "string" || !item.url.startsWith("https")) return false;
 
       const innerMatch = item.url.match(/[?&]url=(https?:\/\/[^&]+)/);
