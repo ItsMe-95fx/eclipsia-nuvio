@@ -13,7 +13,65 @@ const __async = (__this, __arguments, generator) => {
   });
 };
 
-const PYNVIX_API = "https://53011be86895-penguplay.baby-beamup.club/%7B%22source_acermovies%22%3A%22on%22%2C%22source_aniwaves%22%3A%22on%22%2C%22source_allmovieland%22%3A%22on%22%2C%22source_vaplayer%22%3A%22on%22%2C%22source_vidking%22%3A%22on%22%2C%22source_animesuge%22%3A%22on%22%2C%22res_1080%22%3A%22on%22%7D";
+function buildConfig(token) {
+  return {
+    source_acermovies: 'on',
+    source_aniwaves: 'on',
+    source_vaplayer: 'on',
+    source_vidking: 'on',
+    source_animesuge: 'on',
+    source_aether: 'on',
+    res_1080: 'on',
+    auth_token: token
+  };
+}
+
+function buildPynvixApi(token) {
+  const config = buildConfig(token);
+  const encoded = encodeURIComponent(JSON.stringify(config));
+  const manifestUrl = `https://pengu.uk/${encoded}/manifest.json`;
+  return manifestUrl.replace(/\/manifest\.json$/, '');
+}
+
+function fetchAuthToken() {
+  return __async(this, null, function* () {
+    try {
+      const response = yield fetch('https://pengu.uk/auth/token', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Token request failed with status ${response.status}`);
+      }
+      
+      const payload = yield response.json();
+      
+      if (!payload.token) {
+        throw new Error(payload.error || 'No token returned from server');
+      }
+      
+      return payload.token;
+    } catch (error) {
+      throw error;
+    }
+  });
+}
+
+let PYNVIX_API = '';
+
+function initPynvixApi() {
+  return __async(this, null, function* () {
+    const token = yield fetchAuthToken();
+    PYNVIX_API = buildPynvixApi(token);
+  });
+}
+
+initPynvixApi().catch(console.error);
+
 const TMDB_API_KEY = "6e6ab700b6477171ee6c23d504b1e9cb";
 
 const HEADERS = {
@@ -24,35 +82,116 @@ const pad2 = (n) => String(Number.parseInt(n ?? 0, 10) || 0).padStart(2, "0");
 
 const cleanText = (str) =>
   String(str ?? "")
-    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{200D}]/gu, "")
+    .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, "")
     .trim();
 
-const extractSourceName = (rawName) => {
-  const cleaned = cleanText(rawName);
-  const lines = cleaned.split("\n").map((l) => l.trim()).filter(Boolean);
-  const words = lines[0]?.split(/\s+/).filter(Boolean) || [];
-  return words.filter((w) => !/^[$@#~%^&*()+=\[\]{}|:";'<>?,./!]+$/.test(w))[0] || "Unknown";
-};
-
-const extractQualitySpecs = (description) => {
-  const lines = String(description ?? "").split("\n");
-  const specLine = lines.find((l) => l.includes("🎞")) || "";
-  const cleaned = cleanText(specLine);
-  if (!cleaned) return "Unknown";
-  const parts = cleaned.split("•").map((p) => p.trim()).filter(Boolean);
-  const containers = ["mp4", "mkv", "avi", "mov", "flv", "ts"];
-  if (containers.includes(parts[parts.length - 1]?.toLowerCase())) {
-    parts.pop();
-  }
-  return parts.join(" • ") || cleaned;
-};
-
-const is1080pOnly = (qualityStr) => {
-  return String(qualityStr ?? "").includes("1080p") && !String(qualityStr ?? "").includes("2160p") && !String(qualityStr ?? "").includes("4k");
+const extractLanguage = (cleanedTitle) => {
+  const langMatch = String(cleanedTitle ?? "").match(/\(([^)]+)\)/);
+  if (!langMatch) return "Default";
+  const raw = langMatch[1].trim();
+  return raw.toLowerCase() === ""
+    ? "Default"
+    : raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
 };
 
 const isProxyUrl = (url) =>
   String(url ?? "").includes("workers.dev") || /[?&]url=/.test(String(url ?? ""));
+
+function extractQuality(item) {
+  const description = item?.description || '';
+  const name = item?.title || item?.name || '';
+  
+  const combinedText = `${description}\n${name}`.toLowerCase();
+  
+  const parts = [];
+  
+  const resMatch = combinedText.match(/\b(\d{3,4})p\b/i);
+  if (resMatch) {
+    parts.push(`${resMatch[1]}p`);
+  }
+  
+  const sourceTypes = ['web-dl', 'bluray', 'blu-ray', 'hdrrip', 'cam', 'ts', 'tc', 'webrip', 'hdtv'];
+  for (const source of sourceTypes) {
+    if (combinedText.includes(source)) {
+      parts.push(source.toUpperCase());
+      break;
+    }
+  }
+  
+  const codecs = [/h\.264/i, /x264/i, /avc/i, /h\.265/i, /x265/i, /hevc/i];
+  for (const codec of codecs) {
+    if (codec.test(combinedText)) {
+      const match = combinedText.match(codec);
+      if (match) {
+        let codecStr = match[0];
+        if (/h\.265|x265|hevc/i.test(codecStr)) {
+          codecStr = 'H.265';
+        } else if (/h\.264|x264|avc/i.test(codecStr)) {
+          codecStr = 'H.264';
+        }
+        parts.push(codecStr.toUpperCase());
+      }
+      break;
+    }
+  }
+  
+  const audioMatches = combinedText.match(/(dd\+\s*\d+\.\d+|dolby\s*digital|aac|\s\d\.\d\s*ch|dts|truehd|atmos|flac|pcm)/gi);
+  if (audioMatches && audioMatches[0]) {
+    parts.push(audioMatches[0].trim().toUpperCase());
+  }
+  
+  const containers = /\b(mkv|mp4|avi|mov|wmv|m4v)\b/i;
+  const contMatch = combinedText.match(containers);
+  if (contMatch) {
+    parts.push(contMatch[1].toUpperCase());
+  }
+  
+  const streamTypes = ['hls', 'dash', 'rtmp', 'http-stream', 'mss'];
+  for (const stype of streamTypes) {
+    if (combinedText.includes(stype)) {
+      parts.push(stype.toUpperCase());
+      break;
+    }
+  }
+  
+  return parts.length > 0 ? parts.join(' • ') : 'Unknown';
+}
+
+function getSourceName(item) {
+  const filename = item?.behaviorHints?.filename || '';
+  const name = item?.title || item?.name || '';
+  const combined = `${filename}\n${name}`.toLowerCase();
+  
+  if (combined.includes('vadriver') || combined.includes('vaplayer')) return 'Theta';
+  if (combined.includes('vidking')) return 'Alpha';
+  if (combined.includes('acermovies')) return 'Phi';
+  if (combined.includes('aniwaves')) return 'Varphi';
+  if (combined.includes('animesuge')) return 'Zeta';
+  if (combined.includes('aether')) return 'Rho';
+  
+  return null;
+}
+
+function isValidVidkingStream(item) {
+  const filename = item?.behaviorHints?.filename || '';
+  const isFromVidking = filename.toLowerCase().includes('vidking');
+  
+  if (!isFromVidking) {
+    return true;
+  }
+  
+  const referer = item?.behaviorHints?.proxyHeaders?.request?.Referer ||
+                  item?.behaviorHints?.proxyHeaders?.request?.referer ||
+                  '';
+  const origin = item?.behaviorHints?.proxyHeaders?.request?.Origin ||
+                 item?.behaviorHints?.proxyHeaders?.request?.origin ||
+                 '';
+  
+  const lowerRef = referer.toLowerCase();
+  const lowerOrig = origin.toLowerCase();
+  
+  return lowerRef.includes('player') || lowerOrig.includes('player');
+}
 
 function getImdbId(tmdbId, mediaType) {
   return __async(this, null, function* () {
@@ -97,7 +236,8 @@ function resolveProxyUrl(url) {
 }
 
 const detectStreamType = (url) => {
-  if (!url) return "video";
+  if (!url)
+    return "video";
   const lower = String(url).toLowerCase().split("?")[0];
   return lower.includes(".m3u8") ? "m3u8" : "video";
 };
@@ -107,11 +247,10 @@ function buildStream(item) {
     if (!item?.url || item.externalUrl) return null;
     if (String(item.url).includes("github.com")) return null;
 
-    const descToParse = item.description || item.title || "";
-    const sourceName = extractSourceName(item.name);
-    const qualitySpecs = extractQualitySpecs(descToParse);
-
-    if (!is1080pOnly(qualitySpecs)) return null;
+    const cleanedTitle = cleanText(item.title || item.name || '');
+    const quality = extractQuality(item);
+    const language = extractLanguage(cleanedTitle);
+    const providerName = getSourceName(item);
 
     const headers = {
       ...(item.behaviorHints?.proxyHeaders?.request ?? {}),
@@ -124,15 +263,43 @@ function buildStream(item) {
 
     if (!streamUrl) return null;
 
+    const nameParts = ["Pynvix"];
+    if (providerName) nameParts.push(providerName);
+    
+    const displayName = nameParts.join(' • ');
+
     return {
-      name: "Pynvix.",
-      title: `Pynvix • ${sourceName}`,
+      name: displayName,
+      title: quality,
       url: streamUrl,
-      quality: qualitySpecs,
+      quality: quality,
       ...(Object.keys(headers).length > 0 ? { headers } : {}),
       provider: "Pynvix",
+      _providerKey: providerName
     };
   });
+}
+
+function limitStreamsPerProvider(streams, maxPerProvider) {
+  const grouped = {};
+  
+  for (const stream of streams) {
+    const key = stream._providerKey || 'Unknown';
+    if (!grouped[key]) {
+      grouped[key] = [];
+    }
+    grouped[key].push(stream);
+  }
+  
+  const result = [];
+  const sortedKeys = Object.keys(grouped).sort();
+  
+  for (const key of sortedKeys) {
+    const providerStreams = grouped[key];
+    result.push(...providerStreams.slice(0, maxPerProvider));
+  }
+  
+  return result;
 }
 
 function parseStreams(data) {
@@ -140,13 +307,20 @@ function parseStreams(data) {
     if (!Array.isArray(data?.streams) || data.streams.length === 0) return [];
 
     const validItems = data.streams.filter((item) => {
+      if (!isValidVidkingStream(item)) return false;
+      
+      const cleanedTitle = cleanText(item?.title || item?.name || '');
+      if (!cleanedTitle.toLowerCase().includes("")) return false;
       if (typeof item?.url !== "string" || !item.url.startsWith("https")) return false;
+
       const innerMatch = item.url.match(/[?&]url=(https?:\/\/[^&]+)/);
       return !innerMatch || innerMatch[1].startsWith("https");
     });
 
     const streams = yield Promise.all(validItems.map(buildStream));
-    return streams.filter(Boolean);
+    const filteredStreams = streams.filter(Boolean);
+    
+    return limitStreamsPerProvider(filteredStreams, 2);
   });
 }
 
