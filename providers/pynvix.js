@@ -21,8 +21,8 @@ function buildConfig(token) {
     source_vidking: 'on',
     source_animesuge: 'on',
     source_aether: 'on',
-    res_1080: 'on',
     res_2160: 'on',
+    res_1080: 'on',
     auth_token: token
   };
 }
